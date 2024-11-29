@@ -7,7 +7,6 @@ class Subreddit(models.Model):
     description = models.TextField()
     url = models.URLField(unique=True)
     num_members = models.IntegerField()
-    established_at = models.DateTimeField()
     
 
     created_at = models.DateTimeField(auto_now_add=True)

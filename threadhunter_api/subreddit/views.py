@@ -2,6 +2,8 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from threadhunter_api.subreddit.models import Subreddit
 from threadhunter_api.subreddit.serializers import SubredditSerializer
+from threadhunter_api.subreddit.extensions import reddit
+from rest_framework.response import Response
 
 class SubredditAPIView(APIView):
     """
@@ -10,13 +12,10 @@ class SubredditAPIView(APIView):
     def get(self, request, name):
         # check if subreddit exists in db 
         subreddit = Subreddit.objects.filter(name=name).first() 
+          # create subreddit if not exists
         if not subreddit:
-            # if not, create it
-            subreddit = Subreddit.objects.create(name=name)
+            reddit_subreddit = reddit.subreddit(name)
+            subreddit = Subreddit.objects.create(name=name, description=reddit_subreddit.description, url=reddit_subreddit.url, num_members=reddit_subreddit.subscribers)
 
-        # get subreddit data from reddit
-        #subreddit_data = get_subreddit_data(name)
-
-        
         serializer = SubredditSerializer(subreddit)
         return Response(serializer.data)
