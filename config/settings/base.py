@@ -88,7 +88,7 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     "threadhunter_api.users",
     # Your stuff: custom apps go here
-    "threadhunter_api.crawler",
+    "threadhunter_api.subreddit",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -312,7 +312,7 @@ ACCOUNT_AUTHENTICATION_METHOD = "username"
 # https://docs.allauth.org/en/latest/account/configuration.html
 ACCOUNT_EMAIL_REQUIRED = True
 # https://docs.allauth.org/en/latest/account/configuration.html
-ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_EMAIL_VERIFICATION = "optional"
 # https://docs.allauth.org/en/latest/account/configuration.html
 ACCOUNT_ADAPTER = "threadhunter_api.users.adapters.AccountAdapter"
 # https://docs.allauth.org/en/latest/account/forms.html

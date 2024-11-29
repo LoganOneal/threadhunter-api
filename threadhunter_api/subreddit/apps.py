@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class CrawlerConfig(AppConfig):
+class SubredditConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'threadhunter_api.crawler'
+    name = 'threadhunter_api.subreddit'

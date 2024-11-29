@@ -9,6 +9,8 @@ from django.views.generic import TemplateView
 from drf_spectacular.views import SpectacularAPIView
 from drf_spectacular.views import SpectacularSwaggerView
 from rest_framework.authtoken.views import obtain_auth_token
+from threadhunter_api.subreddit import urls as subreddit_urls
+from threadhunter_api.users import urls as users_urls
 
 urlpatterns = [
     path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
@@ -23,7 +25,8 @@ urlpatterns = [
     path("users/", include("threadhunter_api.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
-    # ...
+    path("api/", include("threadhunter_api.subreddit.urls", namespace="api")),
+
     # Media files
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
 ]
