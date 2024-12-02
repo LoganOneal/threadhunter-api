@@ -12,6 +12,9 @@ def create_topic_model(texts: List[str], n_topics: int = 10) -> Dict[str, Any]:
     Returns:
         Dict[str, Any]: Topic analysis results including topics and summary statistics
     """
+
+    print("texts[0]", texts[0])
+    
     # Initialize and fit BERTopic model
     topic_model = BERTopic(n_gram_range=(1, 2), 
                           min_topic_size=5, 

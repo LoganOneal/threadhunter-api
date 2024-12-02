@@ -4,14 +4,28 @@ from threadhunter_api.subreddit.models import Subreddit
 from threadhunter_api.subreddit.serializers import SubredditSerializer
 from threadhunter_api.subreddit.extensions import reddit
 from rest_framework.response import Response
-from .reddit_client import get_subreddit_posts
 from .tasks import process_subreddit_topics
+
+
+from celery.result import EagerResult
+
+from threadhunter_api.users.tasks import get_users_count
+from threadhunter_api.users.tests.factories import UserFactory
 
 class SubredditAPIView(APIView):
     """
     API View to get subreddit data
     """
+
     def get(self, request, name):
+        batch_size = 3
+        UserFactory.create_batch(batch_size)
+        task_result = get_users_count.delay()
+        print("task_result", task_result)
+
+        return Response({"message": "success"})
+    # old get methodg
+    def getold(self, request, name):
         # check if subreddit exists in db 
         subreddit = Subreddit.objects.filter(name=name).first() 
         

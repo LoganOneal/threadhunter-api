@@ -22,8 +22,9 @@ python manage.py migrate
 * run redis server in WSL1
 ```bash
 redis-server
-celery -A config.celery_app worker --loglevel=info
- ```
+pip install gevent
+celery -A config.celery_app worker --loglevel=info -P gevent
+```
 
 
 ### Setting Up Your Users
