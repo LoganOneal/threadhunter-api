@@ -23,6 +23,7 @@ python manage.py migrate
 ```bash
 redis-server
 pip install gevent
+watchmedo auto-restart -d ./ -p '*.py' --recursive  -- celery -A config.celery_app worker --loglevel=info -P gevent --concurrency=1
 celery -A config.celery_app worker --loglevel=info -P gevent
 ```
 

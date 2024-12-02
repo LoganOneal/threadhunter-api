@@ -18,10 +18,21 @@ class SubredditAPIView(APIView):
     """
 
     def get(self, request, name):
-        batch_size = 3
-        UserFactory.create_batch(batch_size)
-        task_result = get_users_count.delay()
-        print("task_result", task_result)
+        # check if subreddit exists in db 
+        subreddit = Subreddit.objects.filter(name=name).first() 
+
+        # create subreddit if not exists
+        #if not subreddit:
+        if True:
+            print(f"Creating subreddit {name}")
+            reddit_subreddit = reddit.subreddit(name)
+            #subreddit = Subreddit.objects.create(name=name, 
+            #                                    description=reddit_subreddit.description, 
+            #                                    url=reddit_subreddit.url, 
+            #                                    num_members=reddit_subreddit.subscribers)
+            # Trigger the Celery task to process topics
+            process_subreddit_topics.delay(name)
+
 
         return Response({"message": "success"})
     # old get methodg
