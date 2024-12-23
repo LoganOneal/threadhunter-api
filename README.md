@@ -1,5 +1,9 @@
 # Threadhunter API
 
+## TODO
+- [ ] save post topics to database
+- [ ] query and display topics in UI
+
 Behold My Awesome Project!
 
 [![Built with Cookiecutter Django](https://img.shields.io/badge/built%20with-Cookiecutter%20Django-ff69b4.svg?logo=cookiecutter)](https://github.com/cookiecutter/cookiecutter-django/)
@@ -11,6 +15,11 @@ Moved to [settings](https://cookiecutter-django.readthedocs.io/en/latest/1-getti
 
 ## Basic Commands
 
+### To run server
+```bash
+python manage.py runserver
+```
+
 ### Migrations
 
 ```bash
@@ -19,13 +28,15 @@ python manage.py migrate
 ```
 
 ### Celery 
-* run redis server in WSL1
+* run redis server in WSL2
 ```bash
 redis-server
 pip install gevent
 watchmedo auto-restart -d ./ -p '*.py' --recursive  -- celery -A config.celery_app worker --loglevel=info -P gevent --concurrency=1
-celery -A config.celery_app worker --loglevel=info -P gevent
+celery -A config.celery_app worker --loglevel=info -P gevent  --concurrency=1
 ```
+
+### Postman authorization
 
 
 ### Setting Up Your Users

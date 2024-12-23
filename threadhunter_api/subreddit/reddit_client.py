@@ -1,7 +1,8 @@
 from typing import List
 from .extensions import reddit
+from .models import Post, Subreddit
 
-def get_subreddit_posts(subreddit_name: str, limit: int = 100) -> List[str]:
+def get_subreddit_posts(subreddit: Subreddit, limit: int = 100) -> List[Post]:
     """
     Fetch recent posts from a subreddit
     
@@ -12,13 +13,11 @@ def get_subreddit_posts(subreddit_name: str, limit: int = 100) -> List[str]:
     Returns:
         List[str]: List of post texts (title + content)
     """
-    subreddit = reddit.subreddit(subreddit_name)
+    subreddit_query = reddit.subreddit(subreddit.name)
     posts = []
     
-    for post in subreddit.hot(limit=limit):
+    for post in subreddit_query.hot(limit=limit):
         # Combine title and selftext for better context
-        text = f"{post.title} {post.selftext}".strip()
-        if text:  # Only add non-empty posts
-            posts.append(text)
-    
+        posts.append(Post(title=post.title, content=post.selftext, reddit_id=post.id, subreddit=subreddit))
+        
     return posts 
