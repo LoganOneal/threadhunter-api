@@ -18,20 +18,24 @@ def process_subreddit_topics(subreddit_id):
         except Exception as e:
             return f"Error during topic model creation: {str(e)}"
 
-        # print the topics for the first post
-        print("Post 1", posts[0])
-        print("Topic 1", topic_model.get_topic(topics[0]))
-        
-        # Save new posts to db
-        for post in posts:
+        for i in range(0, len(posts)):
+            # create the post and add topics to it
+            post = Post.objects.create(
+                title=posts[i].title,
+                content=posts[i].content,
+                reddit_id=posts[i].reddit_id,
+                subreddit=subreddit
+            )
+            post_topics = topic_model.get_topic(topics[i])
+            for topic_name, probability in post_topics:
+                topic, created = Topic.objects.get_or_create(name=topic_name)
+                topic.probability = probability
+                post.topics.add(topic)
+                topic.posts.add(post)
+                topic.save()
+
             post.save()
-        
-        # Save topics to db
-        for topic, prob in zip(topics, probs):
-            print(topic, prob)
-
-
-
+            
         return f"Successfully processed topics for r/{subreddit.name}"
     except Exception as e:
         return f"Error processing topics for r/{subreddit.name}: {str(e)}"

@@ -31,5 +31,7 @@ class SubredditAPIView(APIView):
                 return Response({"error": "Subreddit not found"}, status=404)
             except Exception as e:
                 return Response({"error": str(e)}, status=500)
-
+            
         return Response({"message": "success"})
+    
+    

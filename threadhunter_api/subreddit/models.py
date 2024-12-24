@@ -30,6 +30,7 @@ class Post(models.Model):
 class Topic(models.Model):
     name = models.CharField(max_length=255, unique=True)
     probability = models.FloatField(default=0.0)
+    posts = models.ManyToManyField(Post, blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
