@@ -3,7 +3,6 @@ from typing import Dict, Any, List
 from sklearn.feature_extraction.text import CountVectorizer
 from bertopic.vectorizers import ClassTfidfTransformer
 from bertopic.representation import KeyBERTInspired
-from .models import Post
 
 def create_topic_model() -> Dict[str, Any]:
     """
@@ -24,7 +23,7 @@ def create_topic_model() -> Dict[str, Any]:
 
     return topic_model
 
-def train_topic_model(topic_model: BERTopic, posts: List[Post]) -> tuple[List[int], List[float]]:
+def train_topic_model(topic_model: BERTopic, posts) -> tuple[List[int], List[float]]:
     """
     Train topic model and return topics and probabilities
 
@@ -34,7 +33,7 @@ def train_topic_model(topic_model: BERTopic, posts: List[Post]) -> tuple[List[in
     Returns:
         Tuple[List[int], List[float]]: Topics and probabilities
     """
-    docs = [post.title + " " + post.content for post in posts]
+    docs = [post.title + " " + post.selftext for post in posts]
     topics, probs = topic_model.fit_transform(docs)
 
     return topics, probs

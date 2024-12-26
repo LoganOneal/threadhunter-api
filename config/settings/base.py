@@ -3,6 +3,7 @@
 
 import ssl
 from pathlib import Path
+from celery.schedules import crontab
 
 import environ
 
@@ -301,6 +302,20 @@ CELERY_TASK_TIME_LIMIT = 5 * 60
 CELERY_TASK_SOFT_TIME_LIMIT = 60
 # https://docs.celeryq.dev/en/stable/userguide/configuration.html#beat-scheduler
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
+# Add the beat schedule
+CELERY_BEAT_SCHEDULE = {
+    'process-subreddit-topics-every-day': {
+        'task': 'tasks.update_top_subreddits',
+        'schedule': crontab(hour=0, minute=0),  # Runs every day at midnight
+        'args': (100,),  # Pass the number of subreddits to process
+    },
+    'process-subreddit-posts-every-10-minutes': {
+        'task': 'tasks.update_top_subreddits',
+        'schedule': crontab(minute='*/1'),  # Runs every 10 minutes
+        'args': (100,),  # Pass the number of subreddits to process
+    }
+        
+}
 # https://docs.celeryq.dev/en/stable/userguide/configuration.html#worker-send-task-events
 CELERY_WORKER_SEND_TASK_EVENTS = True
 # https://docs.celeryq.dev/en/stable/userguide/configuration.html#std-setting-task_send_sent_event
