@@ -7,7 +7,7 @@ class CommunitySearchAPIView(APIView):
     """
     API View to search for communities by keyword
     """
-    
+        
     def get(self, request, keyword):
         try:
             subreddits = reddit.subreddits.search(keyword)
@@ -15,10 +15,10 @@ class CommunitySearchAPIView(APIView):
             for subreddit in subreddits:
                 results.append({
                     "name": subreddit.display_name,
-                    "title": subreddit.title,
-                    "description": subreddit.public_description,
                     "url": subreddit.url,
-                    "num_members": subreddit.subscribers,
+                    "iconUrl": subreddit.community_icon,
+                    "numMembers": subreddit.subscribers,
+                    "description": subreddit.public_description,
                 })
             return Response(results, status=200)
         except Exception as e:
