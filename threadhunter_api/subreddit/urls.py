@@ -1,9 +1,10 @@
 from django.urls import path
-from .views import CommunityAPIView, CollectionAPIView, CollectionsAPIView
+from .views import CommunityAPIView, CollectionAPIView, CollectionsAPIView, CommunitySearchAPIView
 
 app_name = 'subreddit'
 
 urlpatterns = [
+    path("search/<str:keyword>/", CommunitySearchAPIView.as_view()),
     path("subreddit/", CommunityAPIView.as_view()),
     path("subreddit/<str:name>", CommunityAPIView.as_view()),
     path('community/<str:name>/', CommunityAPIView.as_view(), name='community-detail'),

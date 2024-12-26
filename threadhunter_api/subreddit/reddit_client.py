@@ -2,16 +2,6 @@ from typing import List
 from .extensions import reddit
 from .models import Post, Subreddit
 
-def query_subreddit(subreddit_name: str) -> Subreddit:
-    """Fetch subreddit data from Reddit API"""
-    reddit_subreddit = reddit.subreddit(subreddit_name)
-    return Subreddit(
-        name=reddit_subreddit.display_name,
-        description=reddit_subreddit.description,
-        url=reddit_subreddit.url,
-        num_members=reddit_subreddit.subscribers
-    )
-
 def get_hot_posts(subreddit: Subreddit, limit: int = 100) -> List[Post]:
     """
     Fetch recent posts from a subreddit
