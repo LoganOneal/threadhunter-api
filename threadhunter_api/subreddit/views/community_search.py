@@ -16,11 +16,12 @@ class CommunitySearchAPIView(APIView):
             
             results = []
             for subreddit in subreddits:
+                icon_url = subreddit.community_icon.split('?')[0] if subreddit.community_icon else None
                 results.append({
                     "id": subreddit.id,
                     "name": subreddit.display_name,
                     "url": subreddit.url,
-                    "iconUrl": subreddit.community_icon,
+                    "iconUrl": icon_url,
                     "numMembers": subreddit.subscribers,
                     "description": subreddit.public_description,
                 })

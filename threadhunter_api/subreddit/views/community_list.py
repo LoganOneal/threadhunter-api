@@ -31,7 +31,7 @@ class CommunityListAPIView(APIView):
             if subreddit:
                 response_data.append({
                         "task_status": "Processed",
-                        "topic_modeling_task_id": -1,
+                        "topic_modeling_task_id": "",
                         "id": subreddit.id,
                 })
             else: 
