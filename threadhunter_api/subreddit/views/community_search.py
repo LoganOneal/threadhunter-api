@@ -11,9 +11,13 @@ class CommunitySearchAPIView(APIView):
     def get(self, request, keyword):
         try:
             subreddits = reddit.subreddits.search(keyword)
+            
+            print("Subreddits: ", subreddits)
+            
             results = []
             for subreddit in subreddits:
                 results.append({
+                    "id": subreddit.id,
                     "name": subreddit.display_name,
                     "url": subreddit.url,
                     "iconUrl": subreddit.community_icon,
